@@ -1,6 +1,7 @@
 import { getReviews } from "../api"
 import { useEffect } from "react"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const Reviews = () => {
 
@@ -25,8 +26,11 @@ const Reviews = () => {
                 {reviews.map((review) => {
                     return (
                         <li className="review" key={review.review_id}>
-                            <h2>{review.title}</h2>
+                            <Link to={`/reviews/${review.review_id}`}>
+                                <h2>{review.title}</h2>
+                            </Link>
                             <p>Votes: {review.votes}</p>
+                            <p>Comments: {review.comment_count}</p>
                             <p>Author: {review.owner}</p>
                             <img src={review.review_img_url} alt="Review Photo"></img>
                         </li>
