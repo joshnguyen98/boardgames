@@ -5,10 +5,15 @@
 img {
   width: 200px;
   height: auto;
-  margin: 16px;
+  margin: 8px;
 }
 
 .review {
+  border: solid;
+  margin: 16px;
+}
+
+.singleReview {
   border: solid;
   margin: 16px;
 }
@@ -19,6 +24,10 @@ ol {
 }
 
 p {
-  margin: 0px;
+  margin: 8px;
   padding: 0px;
+}
+
+h2 {
+  margin: 8px;
 }
