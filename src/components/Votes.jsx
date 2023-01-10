@@ -1,18 +1,16 @@
 import { useState } from "react"
 import { patchReviewById } from "../api"
 
-const Votes = ({votes, review_id}) => {
+const Votes = ({votes, review_id, setError}) => {
 
     const [votesChange, setVotesChange] = useState(0)
 
-    const incVotes = () => {
-        setVotesChange((currVotesChange) => currVotesChange + 1)
-        patchReviewById(review_id, 1)
-    }
-
-    const decVotes = () => {
-        setVotesChange((currVotesChange) => currVotesChange - 1)
-        patchReviewById(review_id, -1)
+    const incVotes = (increment) => {
+        setVotesChange((currVotesChange) => currVotesChange + increment)
+        patchReviewById(review_id, increment)
+        .catch((err) => {
+            setError({ err })
+        })
     }
 
     return (
@@ -20,9 +18,9 @@ const Votes = ({votes, review_id}) => {
             <p>
                 Votes: {votes + votesChange} 
                 <span> | </span>
-                <button onClick={incVotes}>👍</button>
+                <button onClick={() => {incVotes(1)}}>👍</button>
                 <span>  </span>
-                <button onClick={decVotes}>👎</button>
+                <button onClick={() => {incVotes(-1)}}>👎</button>
             </p>
         </section>
     )

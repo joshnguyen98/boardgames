@@ -2,9 +2,11 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import { getSingleReview, getComments} from "../api"
 import SingleReviewCard from "./SingleReviewCard"
+import Error from "./Error"
 
 const SingleReview = () => {
 
+    const [error, setError] = useState(null)
     const [isLoadingReview, setIsLoadingReview] = useState(true)
     const [isLoadingComments, setIsLoadingComments] = useState(true)
     const [review, setReview] = useState({})
@@ -26,6 +28,10 @@ const SingleReview = () => {
         })
     }, [])
 
+    if (error) {
+        return <Error message={error.err.message}/>
+    }
+
     if (isLoadingReview) {
         return <p>Loading Review...</p>
     }
@@ -37,7 +43,7 @@ const SingleReview = () => {
     if (comments.length === 0) {
         return (
             <section>
-                <SingleReviewCard review={review}></SingleReviewCard>
+                <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
                 <section className="comments">
                     <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
                     <div className="comment">
@@ -50,7 +56,7 @@ const SingleReview = () => {
 
     return (
         <section>
-            <SingleReviewCard review={review}></SingleReviewCard>
+            <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
             <section className="comments">
                 <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
                 <ol>
