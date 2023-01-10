@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  color: #ffffff;
+}
+
+body {
+  background-color: #2c7a73;
+  font-family: Helvetica, Sans-Serif;
 }
 
 img {
@@ -8,14 +14,20 @@ img {
   margin: 8px;
 }
 
+/* review card */
+
 .review {
   border: solid;
   margin: 16px;
+  background-color: #49c5b6;
 }
+
 
 .singleReview {
   border: solid;
+  border-color: #ffffff;
   margin: 16px;
+  background-color: #49c5b6;
 }
 
 ol {
@@ -28,6 +40,34 @@ p {
   padding: 0px;
 }
 
+/* Heading for review card */
+
 h2 {
   margin: 8px;
 }
+
+/* Comments on single review page */
+
+.comment {
+  border: solid;
+  border-color: #ffffff;
+  margin: 16px;
+  background-color: #49c5b6;
+}
+
+h3 {
+  margin: 8px;
+}
+
+/* Header */
+
+header {
+  border-bottom: solid;
+  background-color: #49c5b6;
+  padding: 16px;
+}
+
+h1 {
+  margin: 16px;
+}
+
