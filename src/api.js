@@ -17,3 +17,10 @@ export const getSingleReview = (review_id) => {
         return res.data.review
     })
 }
+
+export const getComments = (review_id) => {
+    return api.get(`/reviews/${review_id}/comments`)
+    .then((res) => {
+        return res.data.comments
+    })
+}

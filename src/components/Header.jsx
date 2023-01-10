@@ -1,3 +1,4 @@
+import CategoryNavBar from "./CategoryNavBar"
 import HeaderNavBar from "./HeaderNavBar"
 
 const Header = () => {
@@ -5,6 +6,7 @@ const Header = () => {
         <header>
             <HeaderNavBar />
             <h1>Boardgames Reviews</h1>
+            <CategoryNavBar />
         </header>
     )
 }
