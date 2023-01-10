@@ -4,31 +4,38 @@ import { getSingleReview, getComments} from "../api"
 
 const SingleReview = () => {
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoadingReview, setIsLoadingReview] = useState(true)
+    const [isLoadingComments, setIsLoadingComments] = useState(true)
     const [review, setReview] = useState({})
     const [comments, setComments] = useState([])
     const { review_id } = useParams()
     
     useEffect(() => {
-        setIsLoading(true)
+        setIsLoadingReview(true)
+        setIsLoadingComments(true)
         getSingleReview(review_id)
         .then((reviewFromApi) => {
             setReview(reviewFromApi)
-            setIsLoading(false)
+            setIsLoadingReview(false)
         })
         getComments(review_id)
         .then((commentsFromApi) => {
             setComments(commentsFromApi)
+            setIsLoadingComments(false)
         })
     }, [])
 
-    if (isLoading) {
-        return <p>Loading...</p>
+    if (isLoadingReview) {
+        return <p>Loading Review...</p>
+    }
+
+    if (isLoadingComments) {
+        return <p>Loading Comments...</p>
     }
 
     if (comments.length === 0) {
         return (
-            <div>
+            <section>
                 <div className="singleReview">
                     <h2>{review.title}</h2>
                     <p>Votes: {review.votes}</p>
@@ -38,16 +45,19 @@ const SingleReview = () => {
                     <img src={review.review_img_url} alt="Review Photo"></img>
                     <p>{review.review_body}</p>
                 </div>
-                <div className="comment">
-                    <h3>No Comments.</h3>
-                </div>
-            </div>
+                <section className="comments">
+                    <h1 className="commentsHeader">Comments</h1>
+                    <div className="comment">
+                        <h3>No Comments.</h3>
+                    </div>
+                </section>
+            </section>
         )
     }
 
     return (
-        <div>
-            <div className="singleReview">
+        <section>
+            <section className="singleReview">
                 <h2>{review.title}</h2>
                 <p>Votes: {review.votes}</p>
                 <p>Comments: {review.comment_count}</p>
@@ -55,21 +65,24 @@ const SingleReview = () => {
                 <p>Author: {review.owner}</p>
                 <img src={review.review_img_url} alt="Review Photo"></img>
                 <p>{review.review_body}</p>
-            </div>
-            <ol>
-                {comments.map((comment) => {
-                    return (
-                        <li className="comment" key={comment.comment_id}>
-                            <h3>
-                                By: {comment.author}
-                                <span> | </span>
-                                Votes: {comment.votes}
-                            </h3>
-                            <p>{comment.body}</p>
-                        </li>
-                )})}
-            </ol>
-        </div>
+            </section>
+            <section className="comments">
+                <h1 className="commentsHeader">Comments</h1>
+                <ol>
+                    {comments.map((comment) => {
+                        return (
+                            <li className="comment" key={comment.comment_id}>
+                                <h3>
+                                    By: {comment.author}
+                                    <span> | </span>
+                                    Votes: {comment.votes}
+                                </h3>
+                                <p>{comment.body}</p>
+                            </li>
+                    )})}
+                </ol>
+            </section>
+        </section>
     )
 }
 
