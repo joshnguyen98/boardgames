@@ -4,15 +4,20 @@ import { useState } from "react"
 
 const Reviews = () => {
 
+    const [isLoading, setIsLoading] = useState(true)
     const [reviews, setReviews] = useState([])
 
     useEffect(() => {
         getReviews()
-        .then((reviews) => {
-            setReviews(reviews)
+        .then((reviewsFromApi) => {
+            setReviews(reviewsFromApi)
+            setIsLoading(false)
         })
-    }, [reviews])
+    }, [])
 
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <div>
