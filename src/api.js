@@ -24,3 +24,7 @@ export const getComments = (review_id) => {
         return res.data.comments
     })
 }
+
+export const patchReviewById = (review_id, increment) => {
+    return api.patch(`/reviews/${review_id}`, {inc_votes: increment})
+}

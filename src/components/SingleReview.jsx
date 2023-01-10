@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import { getSingleReview, getComments} from "../api"
+import SingleReviewCard from "./SingleReviewCard"
 
 const SingleReview = () => {
 
@@ -36,17 +37,9 @@ const SingleReview = () => {
     if (comments.length === 0) {
         return (
             <section>
-                <div className="singleReview">
-                    <h2>{review.title}</h2>
-                    <p>Votes: {review.votes}</p>
-                    <p>Comments: {review.comment_count}</p>
-                    <p>Designer: {review.designer}</p>
-                    <p>Author: {review.owner}</p>
-                    <img src={review.review_img_url} alt="Review Photo"></img>
-                    <p>{review.review_body}</p>
-                </div>
+                <SingleReviewCard review={review}></SingleReviewCard>
                 <section className="comments">
-                    <h1 className="commentsHeader">Comments</h1>
+                    <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
                     <div className="comment">
                         <h3>No Comments.</h3>
                     </div>
@@ -57,17 +50,9 @@ const SingleReview = () => {
 
     return (
         <section>
-            <section className="singleReview">
-                <h2>{review.title}</h2>
-                <p>Votes: {review.votes}</p>
-                <p>Comments: {review.comment_count}</p>
-                <p>Designer: {review.designer}</p>
-                <p>Author: {review.owner}</p>
-                <img src={review.review_img_url} alt="Review Photo"></img>
-                <p>{review.review_body}</p>
-            </section>
+            <SingleReviewCard review={review}></SingleReviewCard>
             <section className="comments">
-                <h1 className="commentsHeader">Comments</h1>
+                <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
                 <ol>
                     {comments.map((comment) => {
                         return (
