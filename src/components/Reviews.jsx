@@ -29,9 +29,12 @@ const Reviews = () => {
                             <Link to={`/reviews/${review.review_id}`}>
                                 <h2>{review.title}</h2>
                             </Link>
-                            <p>Votes: {review.votes}</p>
-                            <p>Comments: {review.comment_count}</p>
-                            <p>Author: {review.owner}</p>
+                            <p>By: {review.owner}</p>
+                            <p>
+                                Votes: {review.votes}
+                                <span> | </span>
+                                Comments: {review.comment_count}
+                            </p>
                             <img src={review.review_img_url} alt="Review Photo"></img>
                         </li>
                 )})}
