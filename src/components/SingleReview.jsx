@@ -3,6 +3,8 @@ import { useParams } from "react-router"
 import { getSingleReview, getComments} from "../api"
 import SingleReviewCard from "./SingleReviewCard"
 import Error from "./Error"
+import CommentAdder from "./CommentAdder"
+import CommentDate from "./CommentDate"
 
 const SingleReview = () => {
 
@@ -28,10 +30,6 @@ const SingleReview = () => {
         })
     }, [])
 
-    if (error) {
-        return <Error message={error.err.message}/>
-    }
-
     if (isLoadingReview) {
         return <p>Loading Review...</p>
     }
@@ -40,12 +38,17 @@ const SingleReview = () => {
         return <p>Loading Comments...</p>
     }
 
+    if (error) {
+        return <Error message={error.err.message}/>
+    }
+
     if (comments.length === 0) {
         return (
             <section>
                 <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
                 <section className="comments">
                     <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
+                    <CommentAdder setComments={setComments} review_id={review_id}></CommentAdder>
                     <div className="comment">
                         <h3>No Comments.</h3>
                     </div>
@@ -59,6 +62,7 @@ const SingleReview = () => {
             <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
             <section className="comments">
                 <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
+                <CommentAdder setComments={setComments} review_id={review_id}></CommentAdder>
                 <ol>
                     {comments.map((comment) => {
                         return (
@@ -67,6 +71,8 @@ const SingleReview = () => {
                                     By: {comment.author}
                                     <span> | </span>
                                     Votes: {comment.votes}
+                                    <span> | </span>
+                                    <CommentDate date={comment.created_at}></CommentDate>
                                 </h3>
                                 <p>{comment.body}</p>
                             </li>

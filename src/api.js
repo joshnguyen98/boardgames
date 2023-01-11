@@ -28,3 +28,14 @@ export const getComments = (review_id) => {
 export const patchReviewById = (review_id, increment) => {
     return api.patch(`/reviews/${review_id}`, {inc_votes: increment})
 }
+
+export const postCommentByReviewId = (review_id, newCommentText) => {
+    const postBody = {
+        username: 'jessjelly',
+        body: newCommentText,
+    }
+    return api.post(`/reviews/${review_id}/comments`, postBody)
+    .then((res) => {
+        return res.data.comments
+    })
+}

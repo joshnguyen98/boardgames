@@ -1,8 +1,14 @@
 const Error = ({message}) => {
 
-    return (
-        <p>{message}</p>
-    )
+    if (message !== undefined) {
+        return (
+            <p>{message}</p>
+        )
+    } else {
+        return (
+            <p>Oops, that doesn't exist.</p>
+        )
+    }
 }
 
 export default Error
