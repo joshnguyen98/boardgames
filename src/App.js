@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Reviews from './components/Reviews';
 import SingleReview from './components/SingleReview';
+import Error from './components/Error';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/reviews" element={<Reviews />}/>
         <Route path="/reviews/:review_id" element={<SingleReview />}/>
+        <Route path="/*" element={<Error />}/>
       </Routes>
     </div>
   );
