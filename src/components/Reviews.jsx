@@ -26,8 +26,8 @@ const Reviews = () => {
                 {reviews.map((review) => {
                     return (
                         <li className="review" key={review.review_id}>
-                            <Link to={`/reviews/${review.review_id}`}>
-                                <h2>{review.title}</h2>
+                            <Link to={`/reviews/${review.review_id}`} className="text-link">
+                                    <h2>{review.title}</h2>
                             </Link>
                             <p>By: {review.owner}</p>
                             <p>

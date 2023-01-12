@@ -3,6 +3,13 @@
   color: #ffffff;
 }
 
+/* stop link changing colour and underline */
+
+.text-link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 body {
   background-color: #2c7a73;
 }
@@ -103,6 +110,8 @@ button {
   border-radius: .25rem;
   color: #ffffff;
 }
+
+
 
 /* Header */
 
