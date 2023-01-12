@@ -1,23 +1,34 @@
 import { getReviews } from "../api"
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 const Reviews = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [reviews, setReviews] = useState([])
+    const [error, setError] = useState(null)
+    const { slug } = useParams()
 
     useEffect(() => {
-        getReviews()
+        setError(null)
+        setIsLoading(true)
+        getReviews(slug)
         .then((reviewsFromApi) => {
             setReviews(reviewsFromApi)
             setIsLoading(false)
+        }).catch((err) => {
+            setIsLoading(false)
+            setError(err)
         })
-    }, [])
+    }, [slug])
 
     if (isLoading) {
         return <p>Loading...</p>
+    }
+
+    if (error) {
+        return <p>Oops, that category doesn't exist.</p>
     }
 
     return (
@@ -30,6 +41,7 @@ const Reviews = () => {
                                     <h2>{review.title}</h2>
                             </Link>
                             <p>By: {review.owner}</p>
+                            <p>{review.category}</p>
                             <p>
                                 Votes: {review.votes}
                                 <span> | </span>
