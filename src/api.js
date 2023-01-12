@@ -4,8 +4,8 @@ const api = axios.create({
     baseURL: 'https://josh-nguyen-boardgames.onrender.com/api'
 })
 
-export const getReviews = () => {
-    return api.get(`/reviews`)
+export const getReviews= (category) => {
+    return api.get(`/reviews`, {params: {category: category}})
     .then((res) => {
         return res.data.reviews
     })
@@ -37,5 +37,12 @@ export const postCommentByReviewId = (review_id, newCommentText) => {
     return api.post(`/reviews/${review_id}/comments`, postBody)
     .then((res) => {
         return res.data.comments
+    })
+}
+
+export const getCategories = () => {
+    return api.get(`/categories`)
+    .then((res) => {
+        return res.data.categories
     })
 }

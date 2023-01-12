@@ -40,24 +40,6 @@ const CommentAdder = ({setComments, review_id}) => {
         return <p>Your comment is posting!</p>
     }
 
-    if (error) {
-        return (
-            <section>
-                <form onSubmit={handleSubmit}>
-                    <textarea 
-                        className="textarea"
-                        required
-                        placeholder="What do you think about this review?"
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                    ></textarea>
-                    <button className="submitButton">Post Comment</button>
-                </form>
-                <p>Your comment failed to post.</p> 
-            </section>
-        )
-    }
-
     return (
         <section>
             <form onSubmit={handleSubmit}>
@@ -70,6 +52,7 @@ const CommentAdder = ({setComments, review_id}) => {
                 ></textarea>
                 <button className="submitButton">Post Comment</button>
                 <p>{successMessage}</p>
+                {error && <p>Your comment failed to post.</p>}
             </form>
         </section>
     )

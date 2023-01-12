@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/reviews" element={<Reviews />}/>
+        <Route path="/reviews/category/:slug" element={<Reviews />}/>
         <Route path="/reviews/:review_id" element={<SingleReview />}/>
         <Route path="/*" element={<Error />}/>
       </Routes>

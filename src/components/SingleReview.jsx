@@ -42,42 +42,34 @@ const SingleReview = () => {
         return <Error message={error.err.message}/>
     }
 
-    if (comments.length === 0) {
-        return (
-            <section>
-                <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
-                <section className="comments">
-                    <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
-                    <CommentAdder setComments={setComments} review_id={review_id}></CommentAdder>
-                    <div className="comment">
-                        <h3>No Comments.</h3>
-                    </div>
-                </section>
-            </section>
-        )
-    }
-
     return (
         <section>
             <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
             <section className="comments">
                 <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
                 <CommentAdder setComments={setComments} review_id={review_id}></CommentAdder>
-                <ol>
-                    {comments.map((comment) => {
-                        return (
-                            <li className="comment" key={comment.comment_id}>
-                                <h3>
-                                    By: {comment.author}
-                                    <span> | </span>
-                                    Votes: {comment.votes}
-                                    <span> | </span>
-                                    <CommentDate date={comment.created_at}></CommentDate>
-                                </h3>
-                                <p>{comment.body}</p>
-                            </li>
-                    )})}
-                </ol>
+                {comments.length> 0 && 
+                    <ol>
+                        {comments.map((comment) => {
+                            return (
+                                <li className="comment" key={comment.comment_id}>
+                                    <h3>
+                                        By: {comment.author}
+                                        <span> | </span>
+                                        Votes: {comment.votes}
+                                        <span> | </span>
+                                        <CommentDate date={comment.created_at}></CommentDate>
+                                    </h3>
+                                    <p>{comment.body}</p>
+                                </li>
+                        )})}
+                    </ol>
+                }
+                {comments.length === 0 && 
+                    <div className="comment">
+                        <h3>No Comments.</h3>
+                    </div>
+                }
             </section>
         </section>
     )
