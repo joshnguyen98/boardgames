@@ -5,8 +5,8 @@ import { useEffect, useState } from "react"
 const CategoryNavBar = () => {
     const [categories, setCategories] = useState([])
 
-    const formatWord = (y) => {
-        return y.replace('-', ' ').replace('-', ' ') .replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+    const formatWord = (word) => {
+        return word.replace('-', ' ').replace('-', ' ') .replace(/(?:^|\s)\S/g, a => a.toUpperCase());
     }
 
     useEffect(() => {

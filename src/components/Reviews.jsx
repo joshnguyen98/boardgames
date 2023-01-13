@@ -13,14 +13,14 @@ const Reviews = () => {
     const [sortBy, setSortBy] = useState('created_at')
     const [orderBy, setOrderBy] = useState('desc')
     const [searchParams, setSearchParams] = useSearchParams()
-
+    
     useEffect(() => {
         setError(null)
         setIsLoading(true)
+        setSearchParams({"sort_by": sortBy, "order": orderBy})
         getReviews(slug, sortBy, orderBy)
         .then((reviewsFromApi) => {
             setReviews(reviewsFromApi)
-            setSearchParams({"sort_by": sortBy, "order": orderBy})
             setIsLoading(false)
         }).catch((err) => {
             setIsLoading(false)
