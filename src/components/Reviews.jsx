@@ -1,7 +1,8 @@
 import { getReviews } from "../api"
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useSearchParams } from "react-router-dom"
+import moment from "moment"
 
 const Reviews = () => {
 
@@ -9,19 +10,23 @@ const Reviews = () => {
     const [reviews, setReviews] = useState([])
     const [error, setError] = useState(null)
     const { slug } = useParams()
+    const [sortBy, setSortBy] = useState('created_at')
+    const [orderBy, setOrderBy] = useState('desc')
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         setError(null)
         setIsLoading(true)
-        getReviews(slug)
+        getReviews(slug, sortBy, orderBy)
         .then((reviewsFromApi) => {
             setReviews(reviewsFromApi)
+            setSearchParams({"sort_by": sortBy, "order": orderBy})
             setIsLoading(false)
         }).catch((err) => {
             setIsLoading(false)
             setError(err)
         })
-    }, [slug])
+    }, [slug, sortBy, orderBy])
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -33,6 +38,17 @@ const Reviews = () => {
 
     return (
         <div>
+            <section className="filterBar">
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                    <option value="created_at">Date</option>
+                    <option value="comment_count">Number of Comments</option>
+                    <option value="votes">Number of Votes</option>
+                </select>
+                <select value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+            </section>
             <ol>
                 {reviews.map((review) => {
                     return (
@@ -40,8 +56,7 @@ const Reviews = () => {
                             <Link to={`/reviews/${review.review_id}`} className="text-link">
                                     <h2>{review.title}</h2>
                             </Link>
-                            <p>By: {review.owner}</p>
-                            <p>{review.category}</p>
+                            <p>By: {review.owner} | {moment(review.created_at).fromNow()}</p>
                             <p>
                                 Votes: {review.votes}
                                 <span> | </span>
