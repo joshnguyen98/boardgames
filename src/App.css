@@ -122,6 +122,9 @@ button {
   color: #ffffff;
 }
 
+.deleteButton {
+  margin-bottom: 8px;
+}
 
 
 /* Header */

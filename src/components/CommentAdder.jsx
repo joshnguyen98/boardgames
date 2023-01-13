@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { postCommentByReviewId } from "../api"
 
-const CommentAdder = ({setComments, review_id}) => {
+const CommentAdder = ({setComments, review_id, orComments, setOrComments}) => {
 
-    const [newComment, setNewComment] = useState('')
     const [isPosting, setIsPosting] = useState(false)
     const [error, setError] = useState(null)
     const [successMessage, setSuccessMessage] = useState('')
+    const [newComment, setNewComment] = useState('')
+    
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -18,6 +19,10 @@ const CommentAdder = ({setComments, review_id}) => {
             "votes": 0,
             "created_at": "just now"
         }
+        setOrComments((currComments) => {
+            return [commentToAdd, ...currComments]
+        })
+        console.log(orComments, "<------- BEFORE POSTING")
         setIsPosting(true)
         setComments((currComments) => {
             return [commentToAdd, ...currComments]
@@ -27,6 +32,12 @@ const CommentAdder = ({setComments, review_id}) => {
             setNewComment('')
             setIsPosting(false)
             setSuccessMessage("You posted a new comment!")
+            setOrComments((currComments) => {
+                return currComments.filter((comment) => {
+                    return comment.comment_id !== commentToAdd.comment_id
+                })
+            })
+            console.log(orComments, "<------- AFTER POSTING")
         }).catch((err) => {
             setIsPosting(false)
             setError(err)

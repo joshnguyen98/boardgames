@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
-import { getSingleReview, getComments} from "../api"
+import { getSingleReview, getComments, deleteComment} from "../api"
 import SingleReviewCard from "./SingleReviewCard"
 import Error from "./Error"
 import CommentAdder from "./CommentAdder"
@@ -14,6 +14,8 @@ const SingleReview = () => {
     const [review, setReview] = useState({})
     const [comments, setComments] = useState([])
     const { review_id } = useParams()
+    const [deletedComment, setDeletedComment] = useState([])
+    const [orComments, setOrComments] = useState([])
     
     useEffect(() => {
         setIsLoadingReview(true)
@@ -29,6 +31,22 @@ const SingleReview = () => {
             setIsLoadingComments(false)
         })
     }, [])
+
+    const removeComment = (commentToDelete) => {
+        setDeletedComment(commentToDelete)
+        setComments((currComments) => {
+            return currComments.filter((comment) => 
+                comment.comment_id !== commentToDelete.comment_id
+            )
+        })
+        deleteComment(commentToDelete.comment_id)
+        .catch((err) => {
+            setComments((currComments) => {
+                return [deletedComment, ...currComments]
+            })
+            setError({ err })
+        })
+    }
 
     if (isLoadingReview) {
         return <p>Loading Review...</p>
@@ -47,8 +65,8 @@ const SingleReview = () => {
             <SingleReviewCard review={review} setError={setError}></SingleReviewCard>
             <section className="comments">
                 <h1 className="commentsHeader">Comments: {review.comment_count}</h1>
-                <CommentAdder setComments={setComments} review_id={review_id}></CommentAdder>
-                {comments.length> 0 && 
+                <CommentAdder setComments={setComments} review_id={review_id} orComments={orComments} setOrComments={setOrComments}></CommentAdder>
+                {comments.length > 0 && 
                     <ol>
                         {comments.map((comment) => {
                             return (
@@ -61,6 +79,7 @@ const SingleReview = () => {
                                         <CommentDate date={comment.created_at}></CommentDate>
                                     </h3>
                                     <p>{comment.body}</p>
+                                    {comment.author === "jessjelly" && <button className="deleteButton" onClick={() => {removeComment(comment)}}>Delete</button>}
                                 </li>
                         )})}
                     </ol>
