@@ -24,6 +24,17 @@ img {
 
 /* review card */
 
+.filterBar {
+  margin-top: 16px;
+}
+
+select {
+    text-decoration: inherit;
+    font-family: inherit;
+    margin-right: 8px;
+    height: 24px;
+}
+
 .review {
   border: solid;
   margin: 16px;

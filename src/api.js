@@ -4,8 +4,8 @@ const api = axios.create({
     baseURL: 'https://josh-nguyen-boardgames.onrender.com/api'
 })
 
-export const getReviews= (category) => {
-    return api.get(`/reviews`, {params: {category: category}})
+export const getReviews= (category, sortBy, orderBy) => {
+    return api.get(`/reviews`, {params: {category: category, sort_by: sortBy, order: orderBy}})
     .then((res) => {
         return res.data.reviews
     })
